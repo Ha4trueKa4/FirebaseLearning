@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 
@@ -56,10 +57,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
-fun sendMessage(messageText: String) {
-    val database = Firebase.database
-
-    val messagesRef = database.getReference("messages")
+fun sendMessage(messageText: String, messagesRef : DatabaseReference) {
     val message = ChatMessage(messageText, "Current User", System.currentTimeMillis())
     messagesRef.push().setValue(message)
 }
@@ -106,7 +104,7 @@ fun MessageForm(modifier: Modifier = Modifier) {
 
         LazyColumn(
             modifier = Modifier
-                .weight(1f) // Занимает всю доступную высоту
+                .weight(1f)
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -120,7 +118,6 @@ fun MessageForm(modifier: Modifier = Modifier) {
                             text = "От: ${message.sender ?: "Unknown"}",
                             style = androidx.compose.material3.MaterialTheme.typography.bodySmall
                         )
-                        // Можно добавить форматирование времени, если нужно
                         Text(
                             text = "Время: ${
                                 message.timestamp?.let {
@@ -154,7 +151,7 @@ fun MessageForm(modifier: Modifier = Modifier) {
             Button(
                 onClick = {
                     if (text.isNotBlank()) {
-                        sendMessage(text)
+                        sendMessage(text, messagesRef)
                         text = ""
                     }
                 },
