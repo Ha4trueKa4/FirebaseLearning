@@ -1,4 +1,4 @@
-package com.example.firebaseapplication
+package com.example.firebaseapplication.data
 
 data class ChatMessage(
     val text: String? = null,

@@ -62,7 +62,12 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    //noinspection UseTomlInstead
     implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
+    //noinspection UseTomlInstead
     implementation("com.google.android.gms:play-services-auth:21.5.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    //noinspection UseTomlInstead
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    //noinspection UseTomlInstead
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
 }

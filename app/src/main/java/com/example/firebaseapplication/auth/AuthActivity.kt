@@ -1,4 +1,4 @@
-package com.example.firebaseapplication
+package com.example.firebaseapplication.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.firebaseapplication.chat.MainActivity
 import com.example.firebaseapplication.ui.theme.FireBaseApplicationTheme
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
