@@ -64,4 +64,5 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
     implementation("com.google.android.gms:play-services-auth:21.5.0")
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }

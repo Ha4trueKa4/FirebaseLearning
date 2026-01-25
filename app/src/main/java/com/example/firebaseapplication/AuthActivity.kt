@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.firebaseapplication.ui.theme.FireBaseApplicationTheme
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class AuthActivity : ComponentActivity() {
@@ -20,6 +21,11 @@ class AuthActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
         enableEdgeToEdge()
         setContent {
             FireBaseApplicationTheme {
