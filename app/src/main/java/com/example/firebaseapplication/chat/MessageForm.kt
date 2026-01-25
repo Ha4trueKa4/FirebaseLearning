@@ -31,9 +31,59 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            Scaffold(modifier = Modifier.fillMaxSize(), topBar = { MessageActionBar() }) { innerPadding ->
+                MessageForm(modifier = Modifier.padding(innerPadding))
+            }
+        }
+    }
+}
+
+
+fun sendMessage(messageText: String, messagesRef : DatabaseReference) {
+    val message = ChatMessage(messageText, FirebaseAuth.getInstance().currentUser?.displayName ?: "Guest", System.currentTimeMillis())
+    messagesRef.push().setValue(message)
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MessageActionBar() {
+    val photoUrl = FirebaseAuth.getInstance().currentUser?.photoUrl
+
+    TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary
+        ),
+        title = {
+
+            Row (verticalAlignment = Alignment.CenterVertically){
+                AsyncImage(
+                    model = photoUrl,
+                    contentDescription = "Google avatar",
+                    modifier = Modifier.size(36.dp).clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = FirebaseAuth.getInstance().currentUser?.displayName ?: "User"
+                )
+            }
+
+
+        }
+
+    )
+
+}
 
 @Composable
 fun MessageForm(modifier: Modifier = Modifier) {
@@ -94,10 +144,10 @@ fun MessageForm(modifier: Modifier = Modifier) {
                         Text(
                             text = "Время: ${
                                 message.timestamp?.let {
-                                    SimpleDateFormat(
+                                    java.text.SimpleDateFormat(
                                         "HH:mm",
-                                        Locale.getDefault()
-                                    ).format(Date(it))
+                                        java.util.Locale.getDefault()
+                                    ).format(java.util.Date(it))
                                 } ?: "N/A"
                             }",
                             style = MaterialTheme.typography.bodySmall
