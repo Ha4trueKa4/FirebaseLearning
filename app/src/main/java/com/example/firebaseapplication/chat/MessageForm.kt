@@ -33,58 +33,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            Scaffold(modifier = Modifier.fillMaxSize(), topBar = { MessageActionBar() }) { innerPadding ->
-                MessageForm(modifier = Modifier.padding(innerPadding))
-            }
-        }
-    }
-}
-
-
-fun sendMessage(messageText: String, messagesRef : DatabaseReference) {
-    val message = ChatMessage(messageText, FirebaseAuth.getInstance().currentUser?.displayName ?: "Guest", System.currentTimeMillis())
-    messagesRef.push().setValue(message)
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MessageActionBar() {
-    val photoUrl = FirebaseAuth.getInstance().currentUser?.photoUrl
-
-    TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
-        ),
-        title = {
-
-            Row (verticalAlignment = Alignment.CenterVertically){
-                AsyncImage(
-                    model = photoUrl,
-                    contentDescription = "Google avatar",
-                    modifier = Modifier.size(36.dp).clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Text(
-                    text = FirebaseAuth.getInstance().currentUser?.displayName ?: "User"
-                )
-            }
-
-
-        }
-
-    )
-
-}
-
 @Composable
 fun MessageForm(modifier: Modifier = Modifier) {
     val messageStory = remember { mutableStateListOf<ChatMessage>() }
