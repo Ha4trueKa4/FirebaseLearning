@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.firebaseapplication.data.ChatMessage
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 
 
 class MainActivity : ComponentActivity() {
@@ -24,14 +21,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-
-fun sendMessage(messageText: String, messagesRef : DatabaseReference) {
-    val message = ChatMessage(
-        messageText,
-        FirebaseAuth.getInstance().currentUser?.displayName ?: "Guest",
-        System.currentTimeMillis()
-    )
-    messagesRef.push().setValue(message)
 }
